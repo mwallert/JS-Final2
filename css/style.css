@@ -1,0 +1,15 @@
+#Gallow{
+  height:300px;
+  width: 250px;
+}
+#Word {
+  position: absolute;
+  top: 600px;
+  left: 150px;
+}
+.cell {
+  border: 2px solid black;
+  height: 35px;
+  width: 35px;
+  text-align: center;
+}
