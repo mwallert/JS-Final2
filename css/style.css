@@ -2,14 +2,28 @@
   height:300px;
   width: 250px;
 }
+#Letters {
+  position: absolute;
+  top:550px;
+  left: 50px;
+}
 #Word {
   position: absolute;
   top: 600px;
-  left: 150px;
+  left: 50px;
 }
 .cell {
   border: 2px solid black;
   height: 35px;
   width: 35px;
   text-align: center;
+}
+.cells {
+  border: 2px solid black;
+  height: 35px;
+  width: 35px;
+  text-align: center;
+}
+.red {
+  background-color: red;
 }
