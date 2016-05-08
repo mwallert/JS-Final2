@@ -86,19 +86,16 @@ function addClass(element, classname) {
 }
 //Funtion that changes the alphabet array for when a letter is inputed by the user
 function changeAlphabet (letter) {
-  if((document.getElementsByTagName('td')[letter].className) == 'cells red'){
-    alert('You already used that letter! Please pick another.');
-    correctLetter -= 1;
-    return 'false';
-  }
   addClass(document.getElementsByClassName('cells')[letter], 'red');
   document.getElementsByClassName('cells')[letter].style.color = '#fff';
 }
 //Loop to add an Eventlistener to each element in order to change the box to red when clicked, informing the user this letter has been used.
+var thisClickedLetter;
 for(var i = 0; i < alphabet.length; i++){
   document.getElementsByClassName('cells')[i].addEventListener('click', function(){
     addClass(this, 'red');
     this.style.color = '#fff';
+    thisClickedLetter = String(this.innerHTML.toLowerCase());
   });
 }
 //Function that searches for the letter inputed by the user in the alphabet array
@@ -112,14 +109,10 @@ function letterSearch (letter){
 }
 //Variable to save the letter pressed by the user
 var thisLetter;
-//Variables to save the first, second and third letters returned if the same letter appears multiple times in the game word
-var myLetter1;
-var myLetter2;
-var myLetter3;
 //Function to determine which letter was chosen by the user
 function getChar (evt) {
     evt = evt || window.event;
-    var charCode = evt.keyCode || evt.which;
+    var charCode = evt.keyCode || evt.onClick;
     var charStr = String.fromCharCode(charCode);
     thisLetter = charStr;
   }
@@ -140,7 +133,7 @@ var attempts = 6;
 var imageState = 1;
 //Variable for total times user guessed a correct letter
 var correctLetter = 0;
-//Function that plays the Hang Man Game
+//Function that plays the Hang Man Game when a key on the keyboard is pressed
 function gameOn(){
   getChar();
   letterSearch(thisLetter.toUpperCase());
@@ -168,5 +161,34 @@ function gameOn(){
     break;
   }
 }
+//Function to start the game when a letter is clicked by the user
+function gameOnClick (){
+  thisLetter = thisClickedLetter;
+  letterSearch(thisLetter.toUpperCase());
+  changeAlphabet(myLetter);
+  var totalLetters = (randomSong.replace(/[^a-zA-Z0-9]/g, "")).length;
+  while(attempts > 0){
+    for(var i = 0; i < randomSong.length; i++){
+      if(thisLetter == randomSong[i]){
+        document.getElementsByClassName('cell')[i].style.color = '#000';
+        correctLetter += 1;
+      }
+      else if(checkLetter(thisLetter) == 'false'){
+        document.getElementById('Gallow').src = 'img/step' + imageState + '.png';
+        imageState += 1;
+        attempts -= 1;
+        break;
+      }
+    }
+    if(attempts === 0){
+      alert('You Lose!! Refresh page to try again!');
+    }
+    else if(correctLetter == totalLetters){
+      alert('You win! Congradulations!Please refresh the page to try again!');
+    }
+    break;
+  }
+}
 //Eventlistener for the page
 document.addEventListener('keypress', gameOn);
+document.addEventListener('click', gameOnClick);
