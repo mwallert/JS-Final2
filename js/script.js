@@ -86,7 +86,12 @@ function addClass(element, classname) {
 }
 //Funtion that changes the alphabet array for when a letter is inputed by the user
 function changeAlphabet (letter) {
-  document.getElementsByClassName('cells')[letter].style.backgroundColor = 'red';
+  if((document.getElementsByTagName('td')[letter].className) == 'cells red'){
+    alert('You already used that letter! Please pick another.');
+    correctLetter -= 1;
+    return 'false';
+  }
+  addClass(document.getElementsByClassName('cells')[letter], 'red');
   document.getElementsByClassName('cells')[letter].style.color = '#fff';
 }
 //Loop to add an Eventlistener to each element in order to change the box to red when clicked, informing the user this letter has been used.
@@ -107,23 +112,61 @@ function letterSearch (letter){
 }
 //Variable to save the letter pressed by the user
 var thisLetter;
+//Variables to save the first, second and third letters returned if the same letter appears multiple times in the game word
+var myLetter1;
+var myLetter2;
+var myLetter3;
 //Function to determine which letter was chosen by the user
 function getChar (evt) {
     evt = evt || window.event;
     var charCode = evt.keyCode || evt.which;
     var charStr = String.fromCharCode(charCode);
-    thisLetter = charStr;}
+    thisLetter = charStr;
+  }
 //Function to check if the inputed letter is part of the game word
+function checkLetter (letter) {
+  for(var w = 0; w < randomSong.length; w++){
+    if(letter === randomSong[w]){
+      return 'true';
+    }
+    else if(w == randomSong.length - 1){
+      return 'false';
+    }
+  }
+}
+//Variable for total attemps used
+var attempts = 6;
+//Variable for the new hangman state
+var imageState = 1;
+//Variable for total times user guessed a correct letter
+var correctLetter = 0;
+//Function that plays the Hang Man Game
 function gameOn(){
   getChar();
   letterSearch(thisLetter.toUpperCase());
   changeAlphabet(myLetter);
-  var letter = randomSong.split('');
-  var attempts = 6;
-  while(attempts){
-    checkLetter(thisLetter);
+  var totalLetters = (randomSong.replace(/[^a-zA-Z0-9]/g, "")).length;
+  while(attempts > 0){
+    for(var i = 0; i < randomSong.length; i++){
+      if(thisLetter == randomSong[i]){
+        document.getElementsByClassName('cell')[i].style.color = '#000';
+        correctLetter += 1;
+      }
+      else if(checkLetter(thisLetter) == 'false'){
+        document.getElementById('Gallow').src = 'img/step' + imageState + '.png';
+        imageState += 1;
+        attempts -= 1;
+        break;
+      }
+    }
+    if(attempts === 0){
+      alert('You Lose!! Refresh page to try again!');
+    }
+    else if(correctLetter == totalLetters){
+      alert('You win! Congradulations!Please refresh the page to try again!');
+    }
+    break;
   }
 }
 //Eventlistener for the page
 document.addEventListener('keypress', gameOn);
-document.addEventListener('click', gameOn);
