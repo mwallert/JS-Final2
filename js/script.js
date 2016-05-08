@@ -1,7 +1,7 @@
 //Set list of words for the game
 var songNames = ['fuel','gallows pole','bring it on home', 'let it be','after midnight', 'raise hell'];
 //Set list for the steps on Hangman
-var hangMan = ["img/step1.png"];
+var hangMan = ["img/step1.png","img/step2.png","img/step3.png","img/step4.png","img/step5.png","img/step6.png"];
 //Stores a value to use for the song, generated at random
 var randomSong = songNames[Math.floor(Math.random()*6)];
 
@@ -174,7 +174,7 @@ function gameOnClick (){
         correctLetter += 1;
       }
       else if(checkLetter(thisLetter) == 'false'){
-        document.getElementById('Gallow').src = 'img/step' + imageState + '.png';
+        document.getElementById('Gallow').src = hangMan[imageState];
         imageState += 1;
         attempts -= 1;
         break;
