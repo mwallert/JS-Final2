@@ -5,7 +5,7 @@ var hangMan = ["img/step1.png","img/step2.png","img/step3.png","img/step4.png","
 //Stores a value to use for the song, generated at random
 var randomSong = songNames[Math.floor(Math.random()*6)];
 
-//Create table boxes for the game
+//Create table boxes for the game word
 function createTableElement(numCols) {
   var table = document.createElement('table');
   var row = document.createElement('tr');
@@ -50,6 +50,7 @@ var alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N",'O','P',
 function insertAlphabet (numCols) {
   for(var l = 0; l<numCols; l++){
       document.getElementsByClassName('cells')[l].innerHTML = alphabet[l];
+      document.getElementsByClassName('cells')[l].style.color = '#fff';
   }
 }
 //Target element for the table
@@ -69,14 +70,10 @@ letterGrid.appendChild(setLetters);
 //Inserts the letter into each element of the table
 insertLetter();
 insertAlphabet(26);
-//Function that hides and reveals the game word
-function wordHide (reveal) {
+//Function that hides the game word
+function wordHide () {
   for(var i = 0; i < randomSong.length; i++){
-    document.getElementsByClassName('cell')[i].style.color = "#fff";
-  }
-  var show = reveal;
-  if(show == 1){
-    document.getElementsByClassName('cell')[i].style.color = '#000';
+    document.getElementsByClassName('cell')[i].style.color = "transparent";
   }
 }
 wordHide();
@@ -86,15 +83,13 @@ function addClass(element, classname) {
 }
 //Funtion that changes the alphabet array for when a letter is inputed by the user
 function changeAlphabet (letter) {
-  addClass(document.getElementsByClassName('cells')[letter], 'red');
-  document.getElementsByClassName('cells')[letter].style.color = '#fff';
+  document.getElementsByClassName('cells')[letter].style.color = 'red';
 }
 //Loop to add an Eventlistener to each element in order to change the box to red when clicked, informing the user this letter has been used.
 var thisClickedLetter;
 for(var i = 0; i < alphabet.length; i++){
   document.getElementsByClassName('cells')[i].addEventListener('click', function(){
-    addClass(this, 'red');
-    this.style.color = '#fff';
+    this.style.color = 'red';
     thisClickedLetter = String(this.innerHTML.toLowerCase());
   });
 }
@@ -130,7 +125,7 @@ function checkLetter (letter) {
 //Variable for total attemps used
 var attempts = 6;
 //Variable for the new hangman state
-var imageState = 1;
+var imageState = 0;
 //Variable for total times user guessed a correct letter
 var correctLetter = 0;
 //Function that plays the Hang Man Game when a key on the keyboard is pressed
@@ -142,11 +137,12 @@ function gameOn(){
   while(attempts > 0){
     for(var i = 0; i < randomSong.length; i++){
       if(thisLetter == randomSong[i]){
-        document.getElementsByClassName('cell')[i].style.color = '#000';
+        document.getElementsByClassName('cell')[i].style.color = '#fff';
         correctLetter += 1;
       }
       else if(checkLetter(thisLetter) == 'false'){
-        document.getElementById('Gallow').src = 'img/step' + imageState + '.png';
+        document.getElementById('Gallow').style.visibility = 'visible';
+        document.getElementById('Gallow').src = hangMan[imageState];
         imageState += 1;
         attempts -= 1;
         break;
@@ -174,6 +170,7 @@ function gameOnClick (){
         correctLetter += 1;
       }
       else if(checkLetter(thisLetter) == 'false'){
+        document.getElementById('Gallow').style.visibility = 'visible';
         document.getElementById('Gallow').src = hangMan[imageState];
         imageState += 1;
         attempts -= 1;
