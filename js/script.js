@@ -1,9 +1,9 @@
 //Set list of words for the game
-var songNames = ['fuel','gallows pole','bring it on home', 'let it be','after midnight', 'raise hell'];
+var songNames = ['fuel','gallows pole','bring it on home', 'let it be','after midnight', 'raise hell','whole lotta love', 'stairway to heaven'];
 //Set list for the steps on Hangman
 var hangMan = ["img/step1.png","img/step2.png","img/step3.png","img/step4.png","img/step5.png","img/step6.png"];
 //Stores a value to use for the song, generated at random
-var randomSong = songNames[Math.floor(Math.random()*6)];
+var randomSong = songNames[Math.floor(Math.random()*songNames.length)];
 
 //Create table boxes for the game word
 function createTableElement(numCols) {
@@ -166,7 +166,7 @@ function gameOnClick (){
   while(attempts > 0){
     for(var i = 0; i < randomSong.length; i++){
       if(thisLetter == randomSong[i]){
-        document.getElementsByClassName('cell')[i].style.color = '#000';
+        document.getElementsByClassName('cell')[i].style.color = '#FFF';
         correctLetter += 1;
       }
       else if(checkLetter(thisLetter) == 'false'){
