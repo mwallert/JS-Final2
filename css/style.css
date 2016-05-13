@@ -34,3 +34,10 @@ body {
 .red {
   background-color: red;
 }
+button {
+  border-radius: 5px;
+}
+a {
+  color: #000!important;
+  text-decoration: none;
+}

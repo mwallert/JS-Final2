@@ -122,6 +122,15 @@ function checkLetter (letter) {
     }
   }
 }
+//Function that creates a button to refresh the page when the game is finished
+function refreshThis(){
+  var myBut = document.createElement('button');
+  var myRefresh = document.createElement('a');
+  myRefresh.href = 'https://mwallert.github.io/JS-Final2';
+  myRefresh.innerHTML = 'Click here to play again!';
+  myBut.appendChild(myRefresh);
+  document.getElementById('Word').appendChild(myBut);
+}
 //Variable for total attemps used
 var attempts = 6;
 //Variable for the new hangman state
@@ -150,9 +159,11 @@ function gameOn(){
     }
     if(attempts === 0){
       alert('You Lose!! Refresh page to try again!');
+      refreshThis();
     }
     else if(correctLetter == totalLetters){
       alert('You win! Congradulations!Please refresh the page to try again!');
+      refreshThis();
     }
     break;
   }
@@ -179,9 +190,11 @@ function gameOnClick (){
     }
     if(attempts === 0){
       alert('You Lose!! Refresh page to try again!');
+      refreshThis();
     }
     else if(correctLetter == totalLetters){
       alert('You win! Congradulations!Please refresh the page to try again!');
+      refreshThis();
     }
     break;
   }
