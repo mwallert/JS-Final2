@@ -126,7 +126,7 @@ function checkLetter (letter) {
 function refreshThis(){
   var myBut = document.createElement('button');
   var myRefresh = document.createElement('a');
-  myRefresh.href = 'https://mwallert.github.io/JS-Final2';
+  myRefresh.href = 'https://mwallert.github.io/JS-Hangman';
   myRefresh.innerHTML = 'Click here to play again!';
   myBut.appendChild(myRefresh);
   document.getElementById('Word').appendChild(myBut);
