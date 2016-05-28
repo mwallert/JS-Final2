@@ -41,3 +41,11 @@ a {
   color: #000!important;
   text-decoration: none;
 }
+#Word button {
+  background-color: transparent;
+  border: none;
+}
+#Word button a{
+  color: #fff!important;
+  text-decoration: none;
+}
