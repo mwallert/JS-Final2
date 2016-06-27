@@ -89,8 +89,8 @@ function changeAlphabet (letter) {
 var thisClickedLetter;
 for(var i = 0; i < alphabet.length; i++){
   document.getElementsByClassName('cells')[i].addEventListener('click', function(){
-    this.style.color = 'red';
     thisClickedLetter = String(this.innerHTML.toLowerCase());
+    gameOnClick();
   });
 }
 //Function that searches for the letter inputed by the user in the alphabet array
@@ -141,64 +141,74 @@ var correctLetter = 0;
 function gameOn(){
   getChar();
   letterSearch(thisLetter.toUpperCase());
-  changeAlphabet(myLetter);
-  var totalLetters = (randomSong.replace(/[^a-zA-Z0-9]/g, "")).length;
-  while(attempts > 0){
-    for(var i = 0; i < randomSong.length; i++){
-      if(thisLetter == randomSong[i]){
-        document.getElementsByClassName('cell')[i].style.color = '#fff';
-        correctLetter += 1;
+  if(document.getElementsByClassName('cells')[myLetter].style.color === 'red'){
+    alert('This letter has already been used. Please pick a different letter.');
+  }
+  else {
+    changeAlphabet(myLetter);
+    var totalLetters = (randomSong.replace(/[^a-zA-Z0-9]/g, "")).length;
+    while(attempts > 0){
+      for(var i = 0; i < randomSong.length; i++){
+        if(thisLetter == randomSong[i]){
+          document.getElementsByClassName('cell')[i].style.color = '#fff';
+          correctLetter += 1;
+        }
+        else if(checkLetter(thisLetter) == 'false'){
+          document.getElementById('Gallow').style.visibility = 'visible';
+          document.getElementById('Gallow').src = hangMan[imageState];
+          imageState += 1;
+          attempts -= 1;
+          break;
+        }
       }
-      else if(checkLetter(thisLetter) == 'false'){
-        document.getElementById('Gallow').style.visibility = 'visible';
-        document.getElementById('Gallow').src = hangMan[imageState];
-        imageState += 1;
-        attempts -= 1;
-        break;
+      if(attempts === 0){
+        alert('You Lose!! Refresh page to try again!');
+        refreshThis();
       }
+      else if(correctLetter == totalLetters){
+        alert('You win! Congradulations!Please refresh the page to try again!');
+        refreshThis();
+      }
+      break;
     }
-    if(attempts === 0){
-      alert('You Lose!! Refresh page to try again!');
-      refreshThis();
-    }
-    else if(correctLetter == totalLetters){
-      alert('You win! Congradulations!Please refresh the page to try again!');
-      refreshThis();
-    }
-    break;
   }
 }
 //Function to start the game when a letter is clicked by the user
 function gameOnClick (){
+  letterSearch(thisClickedLetter.toUpperCase());
   thisLetter = thisClickedLetter;
-  letterSearch(thisLetter.toUpperCase());
-  changeAlphabet(myLetter);
-  var totalLetters = (randomSong.replace(/[^a-zA-Z0-9]/g, "")).length;
-  while(attempts > 0){
-    for(var i = 0; i < randomSong.length; i++){
-      if(thisLetter == randomSong[i]){
-        document.getElementsByClassName('cell')[i].style.color = '#FFF';
-        correctLetter += 1;
+  if(document.getElementsByClassName('cells')[myLetter].style.color === 'red'){
+    alert('This letter has already been used. Please pick a different letter.');
+  }
+  else{
+    changeAlphabet(myLetter);
+    letterSearch(thisLetter.toUpperCase());
+    var totalLetters = (randomSong.replace(/[^a-zA-Z0-9]/g, "")).length;
+    while(attempts > 0){
+      for(var i = 0; i < randomSong.length; i++){
+        if(thisLetter == randomSong[i]){
+          document.getElementsByClassName('cell')[i].style.color = '#FFF';
+          correctLetter += 1;
+        }
+        else if(checkLetter(thisLetter) == 'false'){
+          document.getElementById('Gallow').style.visibility = 'visible';
+          document.getElementById('Gallow').src = hangMan[imageState];
+          imageState += 1;
+          attempts -= 1;
+          break;
+        }
       }
-      else if(checkLetter(thisLetter) == 'false'){
-        document.getElementById('Gallow').style.visibility = 'visible';
-        document.getElementById('Gallow').src = hangMan[imageState];
-        imageState += 1;
-        attempts -= 1;
-        break;
+      if(attempts === 0){
+        alert('You Lose!! Refresh page to try again!');
+        refreshThis();
       }
+      else if(correctLetter == totalLetters){
+        alert('You win! Congradulations!Please refresh the page to try again!');
+        refreshThis();
+      }
+      break;
     }
-    if(attempts === 0){
-      alert('You Lose!! Refresh page to try again!');
-      refreshThis();
-    }
-    else if(correctLetter == totalLetters){
-      alert('You win! Congradulations!Please refresh the page to try again!');
-      refreshThis();
-    }
-    break;
   }
 }
 //Eventlistener for the page
 document.addEventListener('keypress', gameOn);
-document.addEventListener('click', gameOnClick);
