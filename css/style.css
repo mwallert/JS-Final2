@@ -37,15 +37,11 @@ body {
 button {
   border-radius: 5px;
 }
-a {
-  color: #000!important;
-  text-decoration: none;
-}
 #Word button {
   background-color: transparent;
   border: none;
 }
 #Word button a{
-  color: #fff!important;
+  color: #fff;
   text-decoration: none;
 }

@@ -12,7 +12,10 @@ function createTableElement(numCols) {
   for(var c = 0; c<numCols; c++){
       var cell = document.createElement('td');
       cell.className += 'cell';
+      var letter = document.createElement('div');
+      letter.className += 'letter';
       row.appendChild(cell);
+      cell.appendChild(letter);
   }
   table.appendChild(row);
   return table;
@@ -38,7 +41,7 @@ function insertLetter () {
       if(letter[l]!==" "){
         letter[l] = letter[l].toUpperCase();
       }
-      document.getElementsByClassName('cell')[l].innerHTML = letter[l];
+      document.getElementsByClassName('letter')[l].innerHTML = letter[l];
       //If the letter is a blank space, changes the background color to represent the blank space
       if(letter[l]===" "){
         document.getElementsByClassName('cell')[l].style.backgroundColor = "blue";
@@ -73,14 +76,10 @@ insertAlphabet(26);
 //Function that hides the game word
 function wordHide () {
   for(var i = 0; i < randomSong.length; i++){
-    document.getElementsByClassName('cell')[i].style.color = "transparent";
+    document.getElementsByClassName('letter')[i].style.visibility = 'hidden';
   }
 }
 wordHide();
-//Function that adds a class name
-function addClass(element, classname) {
-  element.className = 'cells ' + classname;
-}
 //Funtion that changes the alphabet array for when a letter is inputed by the user
 function changeAlphabet (letter) {
   document.getElementsByClassName('cells')[letter].style.color = 'red';
@@ -90,7 +89,8 @@ var thisClickedLetter;
 for(var i = 0; i < alphabet.length; i++){
   document.getElementsByClassName('cells')[i].addEventListener('click', function(){
     thisClickedLetter = String(this.innerHTML.toLowerCase());
-    gameOnClick();
+    thisLetter = thisClickedLetter;
+    gameOn();
   });
 }
 //Function that searches for the letter inputed by the user in the alphabet array
@@ -110,6 +110,7 @@ function getChar (evt) {
     var charCode = evt.keyCode || evt.onClick;
     var charStr = String.fromCharCode(charCode);
     thisLetter = charStr;
+    gameOn();
   }
 //Function to check if the inputed letter is part of the game word
 function checkLetter (letter) {
@@ -137,9 +138,8 @@ var attempts = 6;
 var imageState = 0;
 //Variable for total times user guessed a correct letter
 var correctLetter = 0;
-//Function that plays the Hang Man Game when a key on the keyboard is pressed
+//Function that plays the Hang Man Game when a key on the keyboard is pressed or a letter is clicked
 function gameOn(){
-  getChar();
   letterSearch(thisLetter.toUpperCase());
   if(document.getElementsByClassName('cells')[myLetter].style.color === 'red'){
     alert('This letter has already been used. Please pick a different letter.');
@@ -150,44 +150,8 @@ function gameOn(){
     while(attempts > 0){
       for(var i = 0; i < randomSong.length; i++){
         if(thisLetter == randomSong[i]){
-          document.getElementsByClassName('cell')[i].style.color = '#fff';
-          correctLetter += 1;
-        }
-        else if(checkLetter(thisLetter) == 'false'){
-          document.getElementById('Gallow').style.visibility = 'visible';
-          document.getElementById('Gallow').src = hangMan[imageState];
-          imageState += 1;
-          attempts -= 1;
-          break;
-        }
-      }
-      if(attempts === 0){
-        alert('You Lose!! Refresh page to try again!');
-        refreshThis();
-      }
-      else if(correctLetter == totalLetters){
-        alert('You win! Congradulations!Please refresh the page to try again!');
-        refreshThis();
-      }
-      break;
-    }
-  }
-}
-//Function to start the game when a letter is clicked by the user
-function gameOnClick (){
-  letterSearch(thisClickedLetter.toUpperCase());
-  thisLetter = thisClickedLetter;
-  if(document.getElementsByClassName('cells')[myLetter].style.color === 'red'){
-    alert('This letter has already been used. Please pick a different letter.');
-  }
-  else{
-    changeAlphabet(myLetter);
-    letterSearch(thisLetter.toUpperCase());
-    var totalLetters = (randomSong.replace(/[^a-zA-Z0-9]/g, "")).length;
-    while(attempts > 0){
-      for(var i = 0; i < randomSong.length; i++){
-        if(thisLetter == randomSong[i]){
-          document.getElementsByClassName('cell')[i].style.color = '#FFF';
+          document.getElementsByClassName('letter')[i].style.visibility = 'visible';
+          document.getElementsByClassName('letter')[i].style.color = '#fff';
           correctLetter += 1;
         }
         else if(checkLetter(thisLetter) == 'false'){
@@ -211,4 +175,4 @@ function gameOnClick (){
   }
 }
 //Eventlistener for the page
-document.addEventListener('keypress', gameOn);
+document.addEventListener('keypress', getChar);
