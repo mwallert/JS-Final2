@@ -5,6 +5,41 @@ var hangMan = ["img/step1.png","img/step2.png","img/step3.png","img/step4.png","
 //Stores a value to use for the song, generated at random
 var randomSong = songNames[Math.floor(Math.random()*songNames.length)];
 
+//function that will alert the game help options when the button is clicked
+function helpMe (){
+  alert('Hello user! Welcome to my vanilla javascript hangman game! Currently all the words you will be attempting to guess are song names. The game will begin once you click an alphabetical letter or begin typing on your keyboard. Once you have chosen a letter, it will turn red on the alphabet list. If you guessed one of the letters in the game word it will appear in the proper spot. If you guessed incorrectly than the hangman avatar will appear piece by piece. Once the game is over simply refresh the page of click the text below the game word to play again!')
+}
+//Hint box for the user
+function hint (){
+  var myHint = document.getElementById('Hint');
+  switch(randomSong){
+    case('fuel'):
+    myHint.innerHTML = 'Metallica';
+    break;
+    case('gallows pole'):
+    myHint.innerHTML = 'Led Zeppelin';
+    break;
+    case('bring it on home'):
+    myHint.innerHTML = 'Led Zeppelin';
+    break;
+    case('let it be'):
+    myHint.innerHTML = 'The Beatles';
+    break;
+    case('after midnight'):
+    myHint.innerHTML = 'Dorothy';
+    break;
+    case('raise hell'):
+    myHint.innerHTML = 'Dorothy';
+    break;
+    case('whole lotta love'):
+    myHint.innerHTML = 'Led Zeppelin';
+    break;
+    case('stairway to heaven'):
+    myHint.innerHTML = 'Led Zeppelin';
+    break;
+  }
+}
+hint();
 //Create table boxes for the game word
 function createTableElement(numCols) {
   var table = document.createElement('table');
