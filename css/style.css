@@ -66,7 +66,7 @@ button {
     left: 0;
   }
   .hangmanChar {
-    height: 400px;
+    height: 425px;
     background-image: url('../img/medieval-background.jpg');
     background-size: cover;
   }
