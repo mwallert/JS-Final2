@@ -49,13 +49,22 @@ button {
   text-decoration: none;
 }
 @media(max-device-width: 768px){
-  #Letters {
-    position: absolute;
-    top: 80%;
-    left: 50px;
-  }
   body {
+    background-image: none;
+  }
+  #Letters {
+    position: relative;
+    top: 55%;
+    left: 0;
+  }
+  #Word {
+    position: relative;
+    top: 60%;
+    left: 0;
+  }
+  .hangmanChar {
+    height: 375px;
     background-image: url('../img/medieval-background.jpg');
-    background-size: 100%;
+    background-size: cover;
   }
 }
