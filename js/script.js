@@ -6,7 +6,7 @@ var hangMan = ["img/step1.png","img/step2.png","img/step3.png","img/step4.png","
 var randomSong = songNames[Math.floor(Math.random()*songNames.length)];
 //function that will alert the game help options when the button is clicked
 function helpMe (){
-  alert('Hello user! Welcome to my vanilla javascript hangman game! Currently all the words you will be attempting to guess are song names. The game will begin once you click an alphabetical letter or begin typing on your keyboard. Once you have chosen a letter, it will turn red on the alphabet list. If you guessed one of the letters in the game word it will appear in the proper spot. If you guessed incorrectly than the hangman avatar will appear piece by piece. Once the game is over simply refresh the page of click the text below the game word to play again!')
+  alert('Hello user! Welcome to my vanilla javascript hangman game! Currently all the words you will be attempting to guess are song names. The game will begin once you click an alphabetical letter or begin typing on your keyboard. Once you have chosen a letter, it will turn red on the alphabet list. If you guessed one of the letters in the game word it will appear in the proper spot. If you guessed incorrectly than the hangman avatar will appear piece by piece. Once the game is over simply refresh the page of click the text near the game word to play again!')
 }
 //Help variable that stores how many free letters the user has available.
 var hintsRemaining;
@@ -192,11 +192,12 @@ function checkLetter (letter) {
 //Function that creates a button to refresh the page when the game is finished
 function refreshThis(){
   var myBut = document.createElement('button');
+  myBut.className = 'helpButton';
   var myRefresh = document.createElement('a');
   myRefresh.href = 'https://mwallert.github.io/JS-Hangman';
   myRefresh.innerHTML = 'Click here to play again!';
   myBut.appendChild(myRefresh);
-  document.getElementById('Word').appendChild(myBut);
+  document.getElementById('Help').appendChild(myBut);
 }
 //Variable for total attemps used
 var attempts = 6;
