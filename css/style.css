@@ -2,6 +2,12 @@ body {
   background-image: url('../img/medieval-background.jpg');
   background-size: cover;
 }
+#Input {
+  display: none;
+}
+#InputButton {
+  display: none;
+}
 #Hint {
   color: #fff;
 }
@@ -52,8 +58,11 @@ button {
   body {
     background-image: none;
   }
-  .cell{
-    border: 2px solid rgba(255,255,255,.25);
+  #Input {
+    display: block;
+  }
+  #InputButton {
+    display: block;
   }
   #Letters {
     position: relative;
@@ -69,5 +78,8 @@ button {
     height: 450px;
     background-image: url('../img/medieval-background.jpg');
     background-size: cover;
+  }
+  .cell{
+    border: 2px solid rgba(255,255,255,.25);
   }
 }
