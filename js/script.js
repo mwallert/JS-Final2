@@ -182,7 +182,7 @@ function getChar (evt) {
 function submitLetter (){
   var input = document.getElementById('Input');
   if(input.value){
-    thisLetter = input.value;
+    thisLetter = input.value.toLowerCase();
     input.value = '';
     gameOn();
   }
