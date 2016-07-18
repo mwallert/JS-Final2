@@ -29,6 +29,13 @@ body {
   top: 90%;
   left: 50px;
 }
+.row{
+  margin: 0!important;
+}
+.row .hangmanChar{
+  margin: 0;
+  padding: 0;
+}
 .cell {
   border: 2px solid black;
   height: 35px;
