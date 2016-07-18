@@ -4,42 +4,74 @@ var songNames = ['fuel','gallows pole','bring it on home', 'let it be','after mi
 var hangMan = ["img/step1.png","img/step2.png","img/step3.png","img/step4.png","img/step5.png","img/step6.png"];
 //Stores a value to use for the song, generated at random
 var randomSong = songNames[Math.floor(Math.random()*songNames.length)];
-
 //function that will alert the game help options when the button is clicked
 function helpMe (){
   alert('Hello user! Welcome to my vanilla javascript hangman game! Currently all the words you will be attempting to guess are song names. The game will begin once you click an alphabetical letter or begin typing on your keyboard. Once you have chosen a letter, it will turn red on the alphabet list. If you guessed one of the letters in the game word it will appear in the proper spot. If you guessed incorrectly than the hangman avatar will appear piece by piece. Once the game is over simply refresh the page of click the text below the game word to play again!')
 }
+//Help variable that stores how many free letters the user has available.
+var hintsRemaining;
+if(randomSong.length > 5){
+  hintsRemaining = 2;
+}
+else {
+  hintsRemaining = 1;
+};
 //Hint box for the user
 function hint (){
   var myHint = document.getElementById('Hint');
   switch(randomSong){
     case('fuel'):
-    myHint.innerHTML = 'Metallica';
+    myHint.innerHTML = 'Band Name: Metallica';
     break;
     case('gallows pole'):
-    myHint.innerHTML = 'Led Zeppelin';
+    myHint.innerHTML = 'Band Name: Led Zeppelin';
     break;
     case('bring it on home'):
-    myHint.innerHTML = 'Led Zeppelin';
+    myHint.innerHTML = 'Band Name: Led Zeppelin';
     break;
     case('let it be'):
-    myHint.innerHTML = 'The Beatles';
+    myHint.innerHTML = 'Band Name: The Beatles';
     break;
     case('after midnight'):
-    myHint.innerHTML = 'Dorothy';
+    myHint.innerHTML = 'Band Name: Dorothy';
     break;
     case('raise hell'):
-    myHint.innerHTML = 'Dorothy';
+    myHint.innerHTML = 'Band Name: Dorothy';
     break;
     case('whole lotta love'):
-    myHint.innerHTML = 'Led Zeppelin';
+    myHint.innerHTML = 'Band Name: Led Zeppelin';
     break;
     case('stairway to heaven'):
-    myHint.innerHTML = 'Led Zeppelin';
+    myHint.innerHTML = 'Band Name: Led Zeppelin';
     break;
   }
 }
 hint();
+//Function to give the user a free letter upon request.
+var myLetter;
+function moreHelp (){
+  if(hintsRemaining === 0){
+    alert('You have already used all of your free letters.');
+  }
+  else{
+    var index = Math.floor(Math.random()*randomSong.length);
+    var randomLetter = randomSong[index];
+    myLetter = letterSearch(randomLetter.toUpperCase());
+    for(var i = 0; i < randomSong.length; i++){
+      if(document.getElementsByClassName('letter')[i].style.color === '#fff'){
+        var index = Math.floor(Math.random()*randomSong.length);
+        var randomLetter = randomSong[index];
+      }
+      else if(randomLetter == randomSong[i]){
+        document.getElementsByClassName('letter')[i].style.color = '#fff';
+        document.getElementsByClassName('letter')[i].style.visibility = 'visible';
+        document.getElementsByClassName('cells')[myLetter].style.color = 'red';
+        correctLetter++;
+      }
+    }
+    hintsRemaining--;
+  }
+}
 //Create table boxes for the game word
 function createTableElement(numCols) {
   var table = document.createElement('table');
@@ -129,11 +161,10 @@ for(var i = 0; i < alphabet.length; i++){
   });
 }
 //Function that searches for the letter inputed by the user in the alphabet array
-var myLetter;
 function letterSearch (letter){
   for(var i = 0; i < alphabet.length; i++){
     if(letter == alphabet[i]){
-      myLetter = i;
+      return i;
     }
   }
 }
@@ -175,7 +206,7 @@ var imageState = 0;
 var correctLetter = 0;
 //Function that plays the Hang Man Game when a key on the keyboard is pressed or a letter is clicked
 function gameOn(){
-  letterSearch(thisLetter.toUpperCase());
+  myLetter = letterSearch(thisLetter.toUpperCase());
   if(document.getElementsByClassName('cells')[myLetter].style.color === 'red'){
     alert('This letter has already been used. Please pick a different letter.');
   }
