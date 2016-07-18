@@ -178,6 +178,19 @@ function getChar (evt) {
     thisLetter = charStr;
     gameOn();
   }
+//Function to check the letter submitted by the input box
+function submitLetter (){
+  var input = document.getElementById('Input');
+  if(input.value){
+    thisLetter = input.value;
+    input.value = '';
+    gameOn();
+  }
+  else{
+    alert('Please enter a valid single letter. If you have entered more than one letter, please remember to only enter one letter at a time.');
+    input.value = '';
+  }
+}
 //Function to check if the inputed letter is part of the game word
 function checkLetter (letter) {
   for(var w = 0; w < randomSong.length; w++){
@@ -213,7 +226,7 @@ function gameOn(){
   }
   else {
     changeAlphabet(myLetter);
-    var totalLetters = (randomSong.replace(/[^a-zA-Z0-9]/g, "")).length;
+    var totalLetters = (randomSong.replace(/[^a-zA-Z]/g, "")).length;
     while(attempts > 0){
       for(var i = 0; i < randomSong.length; i++){
         if(thisLetter == randomSong[i]){
