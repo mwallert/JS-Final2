@@ -50,26 +50,31 @@ hint();
 //Function to give the user a free letter upon request.
 var myLetter;
 function moreHelp (){
+  var i = 0;
   if(hintsRemaining === 0){
-    alert('You have already used all of your free letters.');
+    alert("You have already used all of your free letters!");
   }
-  else{
-    var index = Math.floor(Math.random()*randomSong.length);
-    var randomLetter = randomSong[index];
-    myLetter = letterSearch(randomLetter.toUpperCase());
-    for(var i = 0; i < randomSong.length; i++){
-      if(document.getElementsByClassName('letter')[i].style.color === '#fff'){
-        var index = Math.floor(Math.random()*randomSong.length);
-        var randomLetter = randomSong[index];
+  else {
+    while(hintsRemaining){
+      var freeLetter = randomSong[i];
+      myLetter = letterSearch(freeLetter.toUpperCase());
+      if(document.getElementsByClassName('cells')[myLetter].style.color == 'red'){
+        i++;
       }
-      else if(randomLetter == randomSong[i]){
-        document.getElementsByClassName('letter')[i].style.color = '#fff';
-        document.getElementsByClassName('letter')[i].style.visibility = 'visible';
-        document.getElementsByClassName('cells')[myLetter].style.color = 'red';
-        correctLetter++;
+      else{
+        for(var j = 0; j < randomSong.length; j++){
+          if(freeLetter == randomSong[j]){
+            document.getElementsByClassName('letter')[j].style.color = 'white';
+            document.getElementsByClassName('letter')[j].style.visibility = 'visible';
+            correctLetter++;
+          }
+        }
+        changeAlphabet(myLetter);
+        hintsRemaining--;
+        i++;
+        break;
       }
     }
-    hintsRemaining--;
   }
 }
 //Create table boxes for the game word
@@ -120,7 +125,7 @@ var alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N",'O','P',
 function insertAlphabet (numCols) {
   for(var l = 0; l<numCols; l++){
       document.getElementsByClassName('cells')[l].innerHTML = alphabet[l];
-      document.getElementsByClassName('cells')[l].style.color = '#fff';
+      document.getElementsByClassName('cells')[l].style.color = 'white';
   }
 }
 //Target element for the table
@@ -231,7 +236,7 @@ function gameOn(){
       for(var i = 0; i < randomSong.length; i++){
         if(thisLetter == randomSong[i]){
           document.getElementsByClassName('letter')[i].style.visibility = 'visible';
-          document.getElementsByClassName('letter')[i].style.color = '#fff';
+          document.getElementsByClassName('letter')[i].style.color = 'white';
           correctLetter += 1;
         }
         else if(checkLetter(thisLetter) == 'false'){
