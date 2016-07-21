@@ -47,19 +47,22 @@ function hint (){
   }
 }
 hint();
-//Function to give the user a free letter upon request.
+
+//Stores the current letter, either chose by the user or given as a hint
 var myLetter;
+//Stores the game word minus any white space or non-alphabetic letters
+var newWord = cleanWord(randomSong);
+//Function to give the user a free letter upon request.
 function moreHelp (){
-  var i = 0;
   if(hintsRemaining === 0){
     alert("You have already used all of your free letters!");
   }
   else {
     while(hintsRemaining){
-      var freeLetter = randomSong[i];
+      var freeLetter = newWord[Math.floor(Math.random()*(newWord.length - 1))];
       myLetter = letterSearch(freeLetter.toUpperCase());
       if(document.getElementsByClassName('cells')[myLetter].style.color == 'red'){
-        i++;
+        freeLetter = newWord[Math.floor(Math.random()*(newWord.length - 1))];
       }
       else{
         for(var j = 0; j < randomSong.length; j++){
@@ -71,7 +74,10 @@ function moreHelp (){
         }
         changeAlphabet(myLetter);
         hintsRemaining--;
-        i++;
+        if(correctLetter == newWord.length){
+          alert('You win! Congradulations!Please refresh the page to try again!');
+          refreshThis();
+        }
         break;
       }
     }
@@ -104,7 +110,11 @@ function createTableElements(numCols) {
   table.appendChild(row);
   return table;
 }
-
+//This function will take the game word, get rid of all the white spaces, then return said word as a String
+function cleanWord(word){
+  var cleanWord = (word.replace(/[^a-zA-Z]/g, ""));
+  return cleanWord;
+}
 //Function to insert the letter of the song name in each box, one letter at a time
 function insertLetter () {
   for(var l = 0; l<(randomSong.length); l++){
@@ -231,7 +241,6 @@ function gameOn(){
   }
   else {
     changeAlphabet(myLetter);
-    var totalLetters = (randomSong.replace(/[^a-zA-Z]/g, "")).length;
     while(attempts > 0){
       for(var i = 0; i < randomSong.length; i++){
         if(thisLetter == randomSong[i]){
@@ -251,7 +260,7 @@ function gameOn(){
         alert('You Lose!! Refresh page to try again!');
         refreshThis();
       }
-      else if(correctLetter == totalLetters){
+      else if(correctLetter == newWord.length){
         alert('You win! Congradulations!Please refresh the page to try again!');
         refreshThis();
       }
